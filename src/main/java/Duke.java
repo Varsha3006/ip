@@ -1,17 +1,21 @@
 import java.util.Scanner;
 
-public class Main {
 
-    public static void start() {
-        System.out.println("    ____________________________________________________________");
-        System.out.println("    Hello! I'm Duke");
-        System.out.println("    What can I do for you?");
-        System.out.println("    ____________________________________________________________");
-    }
+public class Duke {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
 
-    public static void exit() {
-        System.out.println("    ____________________________________________________________");
-        System.out.println("    Bye. Hope to see you again soon!");
-        System.out.println("    ____________________________________________________________");
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+
+        String command = in.nextLine();
+        while (command.equals("bye") == false) {
+            System.out.println(command);
+            command = in.nextLine();
+        }
+            System.out.println("Bye. Hope to see you again soon!");
+
     }
 }
+
+
