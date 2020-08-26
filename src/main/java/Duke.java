@@ -23,15 +23,15 @@ public class Duke {
             if (userInput.equals("list")) {
                 list.printList();
             } else if(userInput.contains("done")){   //cannot use command.equals since user is entering more than just "done"
-                list.taskCompleted(userInput);
+                list.CompletedTask(userInput);
             } else {
                 System.out.println("added: " + userInput);
                 list.addTask(userInput);
             }
             userInput = in.nextLine();
         }
-        System.out.println("Bye. Hope to see you again soon!");
 
+        System.out.println("Bye. Hope to see you again soon!");
     }
 }
 

@@ -8,7 +8,7 @@ public class List {
         this.size = 0;
     }
 
-
+   /**Prints the list*/
     public void printList() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < size; i++) {
@@ -16,12 +16,14 @@ public class List {
         }
     }
 
+    /** add tasks to the list*/
     public void addTask(String description) {
         this.list[size] = new Task(description);
         this.size++;
     }
 
-    public void taskCompleted(String command) {
+    /** Ticks the completed tasks */
+    public void CompletedTask(String command) {
         command = command.replace("done", " ");
         command = command.strip(); //removes white space
         int index;
