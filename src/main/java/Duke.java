@@ -14,9 +14,10 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    Hello! I'm Duke");
+        System.out.println("    What can I do for you?");
+        System.out.println("    ____________________________________________________________");
 
         String userInput = in.nextLine();
         while (userInput.equals("bye") == false) {
@@ -25,13 +26,14 @@ public class Duke {
             } else if(userInput.contains("done")){   //cannot use command.equals since user is entering more than just "done"
                 list.isCompleted(userInput);
             } else {
-                System.out.println("added: " + userInput);
+                System.out.println("     added: " + userInput);
                 list.addTask(userInput);
             }
             userInput = in.nextLine();
         }
-
-        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    ____________________________________________________________");
     }
 }
 
