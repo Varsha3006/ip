@@ -23,7 +23,7 @@ public class Duke {
             if (userInput.equals("list")) {
                 list.printList();
             } else if(userInput.contains("done")){   //cannot use command.equals since user is entering more than just "done"
-                list.CompletedTask(userInput);
+                list.isCompleted(userInput);
             } else {
                 System.out.println("added: " + userInput);
                 list.addTask(userInput);

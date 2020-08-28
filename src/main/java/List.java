@@ -23,7 +23,7 @@ public class List {
     }
 
     /** Ticks the completed tasks */
-    public void CompletedTask(String command) {
+    public void isCompleted(String command) {
         command = command.replace("done", " ");
         command = command.strip(); //removes white space
         int index;
