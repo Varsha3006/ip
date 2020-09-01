@@ -57,6 +57,7 @@ public class Duke {
     public static void isCompleted(String command) {
         command = command.replace("done", " ");
         command = command.strip(); //removes white space
+
         int index;
         index = Integer.parseInt(command);
 
@@ -92,6 +93,16 @@ public class Duke {
         System.out.println("Now you have " + size + " tasks in the list!");
     }
 
+    public static void addDeadline(String line){
+        String[] descriptionBy = line.split(" /by ");
+        list[size++] = new Deadline(descriptionBy[0], descriptionBy[1]);
+    }
+
+    public static void addEvent(String line) {
+        String[] descriptionAt = line.split(" /at ");
+        list[size++] = new Event(descriptionAt[0], descriptionAt[1]);
+    }
+
     public static void printExitMessage(){
         System.out.println("    ____________________________________________________________");
         System.out.println("    Bye. Hope to see you again soon!");
@@ -102,16 +113,6 @@ public class Duke {
     public static void addTodo(String description) {
        list[size] = new Todo(description);
         size++;
-    }
-
-    public static void addDeadline(String line){
-        String[] descriptionBy = line.split(" /by ");
-        list[size++] = new Deadline(descriptionBy[0], descriptionBy[1]);
-    }
-
-    public static void addEvent(String line) {
-        String[] descriptionAt = line.split(" /at ");
-        list[size++] = new Event(descriptionAt[0], descriptionAt[1]);
     }
 }
 

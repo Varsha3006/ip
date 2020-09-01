@@ -1,5 +1,5 @@
 public class Event extends Task {
-    private static final String DESCRIPTOR = "[E]";
+    private static final String SYMBOL = "[E]";
     private String at;
 
     public Event(String description, String at) {
@@ -9,7 +9,7 @@ public class Event extends Task {
 
     @Override
     public void printTask() {
-        System.out.print("  " + DESCRIPTOR);
+        System.out.print("  " + SYMBOL);
         System.out.print("[" + this.getStatusIcon() + "] " + this.description);
         System.out.println(" (at: " + this.at + ")");
     }
