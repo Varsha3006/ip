@@ -1,3 +1,5 @@
+package Duke;
+
 public class Exception{
     public Exception (String type) {
         switch (type) {
