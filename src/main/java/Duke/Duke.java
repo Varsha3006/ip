@@ -1,12 +1,10 @@
 package Duke;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
-
-    public static final int MAX_TASKS = 100;
-    public static Task[] list =  new Task[MAX_TASKS];
-    public static int size = 0;
+    public static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -19,12 +17,14 @@ public class Duke {
             //If user input list, return list of items
             if (userInput.equals("list")) {
                 printList();
-
                 //If user input done, mark the task as done
             } else if (userInput.contains("done")) {
                 isCompleted(userInput);
 
-            } else {
+            } else if(userInput.contains("delete")){
+                toDeleteTask(userInput);
+            }
+            else {
                 addTask(userInput);
             }
             userInput = in.nextLine();
@@ -52,42 +52,41 @@ public class Duke {
 
     public static void printList() {
 
-        if(size ==0 ) {
+        if(tasks.size() ==0 ) {
             new Exception("empty list");
             return;
         }
         System.out.println("    ____________________________________________________________");
         System.out.println("    Here are the tasks in your list:");
-        for (int i = 0; i < size; i++) {
-            System.out.print(i+1+ ".");
-            list[i].printTask();
+        for (Task task: tasks) {
+            System.out.print(tasks.indexOf(task)+1+ ".");
+            task.printTask();
         }
         System.out.println("    ____________________________________________________________");
     }
 
-     //completed tasks ( e.g. done 3)
+
     public static void isCompleted(String command){
-        int index;
+        int index = 0;
             command = command.replace("done", " ");
             command = command.strip(); //removes white space
         try {
              index = Integer.parseInt(command);
         } catch (NumberFormatException e) {
             System.out.println("Oh no! Please list a task number to be marked done :(");
-            return;
         }
 
         try{
-            index--;
-            list[index].isDone = true;
+            Task task = tasks.get(index-1);
+
+            task.isDone = true;
             System.out.println("    ____________________________________________________________");
             System.out.println("    Nice! I've marked this task as done:");
-            System.out.print(index + 1 + ".");
-            list[index].printTask();
+            System.out.print(index + ".");
+            task.printTask();
             System.out.println("    ____________________________________________________________");
         } catch (NullPointerException e) {
             System.out.println("Oh no! Please enter a valid task number :(");
-            return;
         }
     }
 
@@ -125,24 +124,48 @@ public class Duke {
         }
 
         System.out.println("Got it. I've added this task:");
-        list[size-1].printTask();
-        System.out.println("Now you have " + size + " tasks in the list!");
+        tasks.get(tasks.size()-1).printTask();
+        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
+    }
+
+    public static void toDeleteTask(String line){
+        int size = 0;
+        try {
+            size = Integer.parseInt(line.substring(7));
+        } catch (StringIndexOutOfBoundsException e){
+            System.out.println("OOPS!!! The description of a delete command cannot be empty☹ Please try again!");
+            return;
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Oh no! Please enter a valid task number :(");
+        }
+
+        Task task = tasks.get(size - 1);
+        tasks.remove(task);
+
+        System.out.println("I'll delete this:");
+        task.printTask();
+        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
+
     }
 
     public static void addTodo(String description) {
-        list[size] = new Todo(description);
-        size++;
+        //list[size] = new Todo(description);
+       // size++;
+        tasks.add(new Todo(description));
     }
 
     public static void addDeadline(String line){
         String[] descriptionBy = line.split(" /by ");
-        list[size++] = new Deadline(descriptionBy[0], descriptionBy[1]);
+       // list[size++] = new Deadline(descriptionBy[0], descriptionBy[1]);
+        tasks.add(new Deadline(descriptionBy[0], descriptionBy[1]));
     }
 
     public static void addEvent(String line) {
         String[] descriptionAt = line.split(" /at ");
-        list[size++] = new Event(descriptionAt[0], descriptionAt[1]);
+      //  list[size++] = new Event(descriptionAt[0], descriptionAt[1]);
+        tasks.add(new Event(descriptionAt[1], descriptionAt[1]));
     }
+
 
     public static void printExitMessage(){
         System.out.println("    ____________________________________________________________");
@@ -150,7 +173,6 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
 
     }
-
 
 }
 
