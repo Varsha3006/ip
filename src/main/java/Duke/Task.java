@@ -1,8 +1,9 @@
 package Duke;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected String SYMBOL;
 
     public Task(String description) {
         this.description = description;
@@ -13,8 +14,13 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
+
+    public abstract String getSYMBOL();
+
+    public abstract String toString();
+
     public void printTask() {
-        System.out.println("[" + this.getStatusIcon() + "] " + this.description);
+        System.out.println(this.getStatusIcon() + " " + this.description);
     }
 }
 
