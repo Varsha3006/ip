@@ -1,14 +1,14 @@
 package Duke;
 
 public class Deadline extends Task{
-        //private static final String SYMBOL = "[D]";
-        private String by;
+    //private static final String SYMBOL = "[D]";
+    private String by;
 
-        public Deadline(String description, String by) {
-            super(description);
-            this.by = by;
-            this.SYMBOL = "[D]";
-        }
+    public Deadline(String description, String by) {
+        super(description);
+        this.by = by;
+        this.SYMBOL = "[D]";
+    }
     @Override
     public String getSYMBOL() {
         return SYMBOL;

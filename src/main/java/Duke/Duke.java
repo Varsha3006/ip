@@ -1,25 +1,27 @@
 package Duke;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+
+
 public class Duke {
 
     public static ArrayList<Task> tasks = new ArrayList<>();
+   public static final String path = ("C:\\Users\\65837\\Desktop\\NUS\\Y2S1\\CS2113T\\project\\duke.txt");
 
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
 
-        try {
-            createFile();
-        } catch (IOException e) {
-            printFileError();
-        }
+        createFile();
+
         printWelcomeMessage();
+
         String userInput = in.nextLine();
 
         while (!userInput.equals("bye")) {
@@ -32,7 +34,7 @@ public class Duke {
                 isCompleted(userInput);
 
             } else if(userInput.contains("delete")){
-                toDeleteTask(userInput);
+                deleteTask(userInput);
             }
             else {
                 addTask(userInput);
@@ -55,35 +57,118 @@ public class Duke {
 
         ;
         System.out.println("    Hi! I am easy\n" + logo);
-        System.out.println("    ____________________________________________________________");
+        printLine();
         System.out.println("    What can I do for you?");
+        printLine();
+    }
+
+    public static void printExitMessage() {
+        printLine();
+        System.out.println("    Bye. Hope to see you again soon!");
+        printLine();
+    }
+
+    public static void printLine(){
         System.out.println("    ____________________________________________________________");
     }
 
     private static void printFileError() {
-        System.out.println(" Error reading/writing data.txt.");
+        System.out.println(" Oops! Something went wrong with duke.txt");
+    }
+
+    public static void emptyDescriptionErr(String line){
+        System.out.println("OOPS!!! The description of a " + line + " cannot be empty☹ Please try again!");
+    }
+
+    public static void notValidNumberErr(){
+        System.out.println("Oh no! Please enter a valid task number :(");
+
     }
 
     public static void printList() {
-
 
         if (tasks.size() == 0) {
             new Exception("empty list");
             return;
         }
-        System.out.println("    ____________________________________________________________");
-        System.out.println("    Here are the tasks in your list:");
+
+        printLine();
+
+        System.out.println("    Here are the current tasks in your list:");
 
         for (Task task : tasks) {
             System.out.print(tasks.indexOf(task) + 1 + ".");
             task.printTask();
         }
-        System.out.println("    ____________________________________________________________");
+        printLine();
     }
 
+    //add task to list
+    public static void addTask(String line) {
+        String[] input = line.split(" ", 2);
 
+        switch (input[0]) {
+        case "todo":
+            try {
+                line = line.substring(5);
+                addTodo(line, false);
+            } catch (StringIndexOutOfBoundsException e) {
+                emptyDescriptionErr("todo");
+                return;
+            }
+            break;
+        case "deadline":
+            try {
+                line = line.substring(9);
+                addDeadline(line, false);
+            } catch (StringIndexOutOfBoundsException e) {
+                emptyDescriptionErr("deadline");
+                return;
+            }
+            break;
+        case "event":
+            try {
+                line = line.substring(6);
+                addEvent(line, false);
+            } catch (StringIndexOutOfBoundsException e) {
+                emptyDescriptionErr("event");
+                return;
+            }
+            break;
+        default:
+            new Exception("not valid");
+            return;
+        }
+        System.out.println("Got it. I've added this task:");
+        tasks.get(tasks.size()-1).printTask();
+        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
+    }
 
-    //completed tasks ( e.g. done 3)
+    public static void deleteTask(String line){
+        int size = 0;
+        try {
+            size = Integer.parseInt(line.substring(7));
+        } catch (StringIndexOutOfBoundsException e){
+            emptyDescriptionErr("delete command");
+            return;
+        } catch (IndexOutOfBoundsException e){
+            notValidNumberErr();
+        }
+
+        Task task = tasks.get(size - 1);
+        String prevTask = task.toString();
+        tasks.remove(task);
+        try {
+            replaceContent(prevTask, " ");
+        } catch (IOException e) {
+            printFileError();
+        }
+        System.out.println("I'll delete this:");
+        task.printTask();
+        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
+
+    }
+
     public static void isCompleted(String command) {
         int index = 0;
         command = command.replace("done", " ");
@@ -91,195 +176,128 @@ public class Duke {
         try {
             index = Integer.parseInt(command);
         } catch (NumberFormatException e) {
-            System.out.println("Oh no! Please list a task number to be marked done :(");
+            notValidNumberErr();
         }
-
         try {
             Task task = tasks.get(index - 1);
-            String oldTaskString = task.toString();
+            String prevTask = task.toString();
             task.isDone = true;
-            updateFile(oldTaskString, task.toString());
+            String newTask = task.toString();
+            replaceContent(prevTask, newTask);
 
-            System.out.println("    ____________________________________________________________");
+            printLine();
             System.out.println("    Nice! I've marked this task as done:");
             System.out.print(index + ".");
             task.printTask();
-            System.out.println("    ____________________________________________________________");
+            printLine();
         } catch (NullPointerException e) {
-            System.out.println("Oh no! Please enter a valid task number :(");
+            notValidNumberErr();
         } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+            printFileError();
         }
     }
 
-
-    //add task to list
-    public static void addTask(String line) {
-
-        if (line.startsWith("todo")) {
-            try {
-                line = line.substring(5);
-                addTodo(line,false);
-            } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("OOPS!!! The description of a todo cannot be empty☹ Please try again!");
-                return;
-            }
-        } else if (line.startsWith("deadline")) {
-            try {
-                line = line.substring(9);
-                addDeadline(line,false);
-            } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("OOPS!!! The description of a deadline cannot be empty☹ Please try again! ");
-                return;
-            }
-        } else if (line.startsWith("event")) {
-            try {
-                line = line.substring(6);
-                addEvent(line,false);
-            } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("OOPS!!! The description of a event cannot be empty☹ Please try again!");
-                return;
-            }
-        } else {
-            new Exception("not valid");
-            return;
-        }
-
-        System.out.println("Got it. I've added this task:");
-        tasks.get(tasks.size()-1).printTask();
-        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
-    }
-
-    public static void toDeleteTask(String line){
-        int size = 0;
-        try {
-            size = Integer.parseInt(line.substring(7));
-        } catch (StringIndexOutOfBoundsException e){
-            System.out.println("OOPS!!! The description of a delete command cannot be empty☹ Please try again!");
-            return;
-        } catch (IndexOutOfBoundsException e){
-            System.out.println("Oh no! Please enter a valid task number :(");
-        }
-
-        Task task = tasks.get(size - 1);
-        tasks.remove(task);
-
-        System.out.println("I'll delete this:");
-        task.printTask();
-        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
-
-    }
-
-
-    public static void addTodo(String line, Boolean fromFile) {
+    public static void addTodo(String line, Boolean existInFile) {
         tasks.add(new Todo(line));
 
-        if (!fromFile) {
-            writeToFile("duke.txt", tasks.get(tasks.size()-1).toString());
+        String inputToFile =  tasks.get(tasks.size()-1).toString();
+
+        if (!existInFile) {
+            writeToFile(path, inputToFile);
         }
     }
 
     public static void addDeadline(String line, Boolean fromFile) {
-        String[] descriptionBy = line.split(" /by ");
-       // list[size++] = new Deadline(descriptionBy[0], descriptionBy[1]);
-        tasks.add(new Deadline(descriptionBy[0], descriptionBy[1]));
+        String[] description = line.split(" /by ");
+
+        tasks.add(new Deadline(description[0], description[1]));
+
+        String inputToFile =  tasks.get(tasks.size()-1).toString();
 
         if (!fromFile) {
-            writeToFile("duke.txt", tasks.get(tasks.size()-1).toString());
+            writeToFile(path, inputToFile);
         }
 
     }
 
     public static void addEvent(String line, Boolean fromFile) {
-        String[] descriptionAt = line.split(" /at ");
+        String[] description = line.split(" /at ");
 
-      //  list[size++] = new Event(descriptionAt[0], descriptionAt[1]);
-        tasks.add(new Event(descriptionAt[0], descriptionAt[1]));
+        tasks.add(new Event(description[0], description[1]));
+        String inputToFile =  tasks.get(tasks.size()-1).toString();
         if (!fromFile) {
-            writeToFile("duke.txt", tasks.get(tasks.size()-1).toString());
+            writeToFile(path, inputToFile);
         }
     }
 
 
-    public static void printExitMessage() {
-
-        System.out.println("    ____________________________________________________________");
-        System.out.println("    Bye. Hope to see you again soon!");
-        System.out.println("    ____________________________________________________________");
-
-    }
-
-
-    public static void createFile() throws IOException {
-        File file = new File("duke.txt");
+    public static void createFile() {
+        try{
+        File file = new File(path);
 
         if (file.exists() == false) {
             file.createNewFile();
+        } else {
+            System.out.println("File already exists.");
         }
-        Scanner read = new Scanner(file);
-        while (read.hasNext()) {
-            loadFileTask(read.nextLine());
+            Scanner input = new Scanner(file);
+            while (input.hasNext()) {
+                loadFileTask(input.nextLine());
+            }
+            input.close();
+        } catch (IOException e) {
+            printFileError();
         }
-        read.close();
+
     }
+
+    public static void writeToFile(String filePath, String textToAdd) {
+        try{
+        FileWriter fw = new FileWriter(filePath, true);
+        fw.write(System.lineSeparator() + textToAdd);
+        fw.close();
+        } catch (IOException e) {
+            printFileError();
+        }
+    }
+
 
     public static void loadFileTask(String line) {
-        String[] taskDetails = line.split(" \\| ");
+        String[] taskDescription = line.split(" \\| ");
 
-        switch (taskDetails[0]) {
+        switch (taskDescription[0]) {
         case "[T]":
-            addTodo(taskDetails[2], true);
+            addTodo(taskDescription[2], true);
             break;
         case "[D]":
-            addDeadline(taskDetails[2] + " /by " + taskDetails[3], true);
+            addDeadline(taskDescription[2] + " /by " + taskDescription[3], true);
             break;
         case "[E]":
-            addEvent(taskDetails[2] + " /at " + taskDetails[3], true);
+            addEvent(taskDescription[2] + " /at " + taskDescription[3], true);
             break;
         default:
-            // Happens if there is nothing in the list (or any garbage text)
-            return;
-        }
-
-        // Mark as done if the task is already done
-        if (taskDetails[1].equals("1")) {
-            tasks.get(tasks.size()-1).isDone = true;
         }
     }
 
-    public static void writeToFile(String filePath, String line) {
-        try {
-            FileWriter writer = new FileWriter(filePath, true);
-            writer.write(System.lineSeparator() + line);
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
-    }
 
-    /*
-    Updates the file
-     */
-    public static void updateFile(String oldTaskString, String newTaskString) throws IOException {
-        File file = new File("duke.txt");
+    //Reused from https://www.tutorialspoint.com/how-to-overwrite-a-line-in-a-txt-file-using-java
+    // with slight modifications
+    public static void replaceContent(String prevTask, String newTask) throws IOException {
+        File file = new File(path);
         Scanner read = new Scanner(file);
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
-        // Puts everything from file into buffer
         while (read.hasNext()) {
             buffer.append(read.nextLine() + System.lineSeparator());
         }
-
         read.close();
 
-        // Puts everything from buffer into String
         String fileContents = buffer.toString();
-
-        // Update the file
-        fileContents = fileContents.replace(oldTaskString, newTaskString);
-        FileWriter writer = new FileWriter("duke.txt");
-        writer.append(fileContents);
-        writer.flush();
+        fileContents = fileContents.replace(prevTask, newTask);
+        FileWriter write = new FileWriter(path);
+        write.append(fileContents);
+        write.flush();
     }
+
 
 }
