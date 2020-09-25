@@ -7,7 +7,14 @@ import java.util.ArrayList;
 import static Duke.Ui.*;
 
 public class TaskList {
+    private Storage storage;
     public static ArrayList<Task> tasks = new ArrayList<>();
+
+
+    public TaskList(Storage inStorage) {
+        tasks = new ArrayList<>();
+        storage = inStorage;
+    }
 
     public static void deleteTask(String line){
         int size = 0;
@@ -48,46 +55,6 @@ public class TaskList {
         printLine();
     }
 
-    public static void addTask(String line) throws IOException {
-        String[] input = line.split(" ", 2);
-
-        switch (input[0]) {
-        case "todo":
-            try {
-                line = line.substring(5);
-                addTodo(line);
-            } catch (StringIndexOutOfBoundsException e) {
-                emptyDescriptionErr("todo");
-                return;
-            }
-            break;
-        case "deadline":
-            try {
-                line = line.substring(9);
-                addDeadline(line);
-            } catch (StringIndexOutOfBoundsException e) {
-                emptyDescriptionErr("deadline");
-                return;
-            }
-            break;
-        case "event":
-            try {
-                line = line.substring(6);
-                addEvent(line);
-            } catch (StringIndexOutOfBoundsException e) {
-                emptyDescriptionErr("event");
-                return;
-            }
-            break;
-        default:
-            new Exception("not valid");
-            return;
-        }
-        System.out.println("Got it. I've added this task:");
-        tasks.get(tasks.size()-1).printTask();
-        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
-    }
-
     public static void isCompleted(String command) {
         int index = 0;
         command = command.replace("done", " ");
@@ -110,7 +77,6 @@ public class TaskList {
             printLine();
         } catch (NullPointerException e) {
             notValidNumberErr();
-            return;
         }
     }
 
@@ -134,5 +100,11 @@ public class TaskList {
         Event newEvent = new Event(description[0], description[1]);
         tasks.add(newEvent);
         Storage.appendToFile(newEvent);
+    }
+
+    public static void itemAddedMessage(){
+        System.out.println("Got it. I've added this task:");
+        tasks.get(tasks.size()-1).printTask();
+        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
     }
 }

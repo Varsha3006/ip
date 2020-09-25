@@ -10,14 +10,24 @@ import java.util.Scanner;
 import static Duke.TaskList.addEvent;
 import static Duke.TaskList.addDeadline;
 import static Duke.TaskList.addTodo;
+import static Duke.Ui.printFileError;
 
 public class Storage {
 
-    public static final String path = ("C:\\Users\\65837\\Desktop\\NUS\\Y2S1\\CS2113T\\project\\duke.txt");
+    private static String filePath;
 
-    public static void createFile() throws IOException {
+    public Storage(String input) throws IOException{
+        filePath = input;
+          try {
+            createFile();
+         } catch (IllegalStateException e) {
+              printFileError();
+          }
+    }
+
+    public  void createFile() throws IOException {
           try{
-              File file = new File(path);
+              File file = new File(filePath);
               if (!file.exists()) {
                   file.createNewFile();
               } else {
@@ -41,30 +51,30 @@ public class Storage {
                 s.close();
             }
         } catch (IOException e) {
-            Ui.printFileError();
+            printFileError();
         }
     }
 
 
 
-    public static void writeToFile(ArrayList < Task >tasks,int size) {
+    public static void writeToFile(ArrayList<Task> tasks, int size) {
         try {
-            FileWriter fw = new FileWriter(path);
+            FileWriter fw = new FileWriter(filePath);
             for (int i = 0; i < tasks.size(); i++) {
                 String fileInput = tasks.get(i).toString();
                 fw.write(System.lineSeparator() + fileInput);
             }
             fw.close();
         } catch (IOException e) {
-            Ui.printFileError();
+            printFileError();
         }
     }
 
-    public static void appendToFile( Task input) throws IOException {
-        FileWriter fw = new FileWriter(path, true);
+    public static void appendToFile(Task input) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
         String fileInput = input.toString();
         fw.write(System.lineSeparator() + fileInput);
-
+        fw.close();
     }
 }
 
