@@ -18,7 +18,7 @@
 Duke is a desktop application for task management, optimized for use via a Command Line Interface (CLI). If you like typing, Duke is the perfect task management application for you. Duke can manage your todo tasks, deadlines and events quickly
 ## 2. Quick Start
 1. Ensure you have Java 11 or above installed in your Computer.
-2. Download the latest iP.jar.
+2. Download the latest Duke.jar.
 3. Launch the program by double clicking the downloaded jar file, or run command java -jar iP.jar .
 4. Type the command and press 'Enter' on the keyboard to execute it.
 5. Refer to Section 3, "Features" for details of each command.
