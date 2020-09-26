@@ -1,6 +1,7 @@
 package Duke;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -144,6 +145,21 @@ public class TaskList {
     public static ArrayList<Task> find(String line) {
         return (ArrayList<Task>) tasks.stream()
                 .filter(t -> t.description.toLowerCase().contains(line))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a list of tasks which has deadlines on a specific date or
+     * events which occur on that specific date.
+     * Filters the task list by the date.
+     *
+     * @param date Date to be filtered by.
+     * @return List of tasks which are filtered by the date.
+     */
+    public static ArrayList<Task> filterByDate(LocalDate date) {
+      return (ArrayList<Task>)tasks.stream()
+                .filter((t) -> !(t instanceof Todo))
+                .filter((t) -> t.getDate().equals(date))
                 .collect(Collectors.toList());
     }
 

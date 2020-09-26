@@ -1,5 +1,8 @@
 package Duke;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task{
     private String by;
 
@@ -7,6 +10,8 @@ public class Deadline extends Task{
         super(description);
         this.by = by;
         this.SYMBOL = "[D]";
+        this.setDate(LocalDate.parse(by));
+
     }
 
     /**
@@ -41,12 +46,12 @@ public class Deadline extends Task{
 
     /**
      * Prints the deadline in the format:
-     * <[D][status] description (by: deadline)
+     * [D][status] description (by: deadline)
      */
     @Override
     public void printTask() {
         System.out.print("  " + SYMBOL);
         System.out.print(this.getStatusIcon() + " " + this.description);
-        System.out.println(" (by: " + this.by + ")");
+        System.out.println(" (by: " + date.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")");
     }
 }

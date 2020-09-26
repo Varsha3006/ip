@@ -1,9 +1,14 @@
 package Duke;
 
+import java.time.LocalDate;
+
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected String SYMBOL;
+    protected LocalDate date;
+
 
     public Task(String description) {
         this.description = description;
@@ -26,6 +31,24 @@ public abstract class Task {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Returns the date associated with the task.
+     *
+     * @return Either the deadline of the date of occurrence of task.
+     */
+    public LocalDate getDate() {
+        return date;
+    }
+
+    /**
+     * Sets the date of the task.
+     *
+     * @param date Date of task.
+     */
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public abstract String getSYMBOL();
