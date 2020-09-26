@@ -6,9 +6,18 @@ import Duke.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a command which finds tasks based on the keyword input.
+ */
 public class FindCommand extends Command  {
     private String key;
 
+    /**
+     * Finds tasks with the corresponding keyword.
+     *
+     * @param command input by user to find the keyword
+     *
+     */
     public FindCommand(String command)  {
         this.key = command.substring(5);
 

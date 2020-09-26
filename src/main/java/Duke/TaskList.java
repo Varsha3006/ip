@@ -3,10 +3,11 @@ package Duke;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import Duke.Task;
 
-import static Duke.Ui.*;
 
+/**
+ * Represents the TaskList.
+ */
 public class TaskList {
     private Storage storage;
     public static ArrayList<Task> tasks = new ArrayList<>();
@@ -17,18 +18,28 @@ public class TaskList {
         storage = inStorage;
     }
 
-    public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
-    }
-
+    /**
+     * Returns the size of the task list.
+     *
+     * @return Size of task list.
+     */
     public int getSize() {
         return tasks.size();
     }
 
+    /**
+     * Returns the task based on the index.
+     *
+     * @param index Index of task.
+     * @return Task with the corresponding index.
+     */
     public Task getTask(Integer index) {
         return tasks.get(index);
     }
 
+    /**
+     * Prints the entire task list.
+     */
     public void print() {
         for (Task task : tasks) {
             System.out.print(tasks.indexOf(task) + 1 + ".");
@@ -36,28 +47,36 @@ public class TaskList {
         }
     }
 
+    /**
+     *
+     * @param line task to be deleted from list
+     */
 
     public static void deleteTask(String line){
         int size = 0;
-        printLine();
+        Ui.printLine();
         try {
             size = Integer.parseInt(line.substring(7));
         } catch (StringIndexOutOfBoundsException e){
-            emptyDescriptionErr("delete command");
+            Ui.emptyDescriptionErr("delete command");
             return;
         } catch (IndexOutOfBoundsException e){
-            notValidNumberErr();
+            Ui.notValidNumberErr();
         }
 
         Task task = tasks.get(size - 1);
         tasks.remove(task);
-        Storage.writeToFile(tasks,size);
+        Storage.writeToFile(tasks);
         System.out.println("I'll delete this:");
         task.printTask();
         System.out.println("Now you have " + tasks.size() + " tasks in the list!");
 
     }
 
+    /**
+     *
+     * @param command task to be marked as done
+     */
     public static void isCompleted(String command) {
         int index = 0;
         command = command.replace("done", " ");
@@ -65,24 +84,30 @@ public class TaskList {
         try {
             index = Integer.parseInt(command);
         } catch (NumberFormatException e) {
-            notValidNumberErr();
+            Ui.notValidNumberErr();
             return;
         }
         try {
             Task task = tasks.get(index - 1);
             task.isDone = true;
 
-            Storage.writeToFile(tasks,index);
-            printLine();
+            Storage.writeToFile(tasks);
+            Ui.printLine();
             System.out.println("    Nice! I've marked this task as done:");
             System.out.print(index + ".");
             task.printTask();
-            printLine();
-        } catch (NullPointerException e) {
-            notValidNumberErr();
+            Ui.printLine();
+        } catch (IndexOutOfBoundsException e) {
+            Ui.notValidNumberErr();
         }
     }
 
+    /**
+     * Adds a todo task to the TaskList.
+     *
+     * @param line User command input.
+     *
+     */
     public static void addTodo(String line) throws IOException{
 
         Todo newTodo = new Todo(line);
@@ -90,6 +115,12 @@ public class TaskList {
         Storage.appendToFile(newTodo);
     }
 
+    /**
+     * Adds a deadline task to the TaskList.
+     *
+     * @param line User command input.
+     *
+     */
     public static void addDeadline(String line) throws IOException{
         String[] description = line.split(" /by ");
         Deadline newDeadline = new Deadline(description[0], description[1]);
@@ -97,7 +128,11 @@ public class TaskList {
 
         Storage.appendToFile(newDeadline);
     }
-
+    /**
+     * Adds an event task to the TaskList.
+     *
+     * @param line User command input.
+     */
     public static void addEvent(String line) throws IOException{
         String[] description = line.split(" /at ");
         Event newEvent = new Event(description[0], description[1]);

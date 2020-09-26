@@ -8,10 +8,11 @@ import java.util.Scanner;
 
 public class Parser {
 
-
+    /**
+     * Represents a parser to parse command inputs by the user.
+     */
     public static Command runCommand(TaskList list) throws IOException {
         Scanner in = new Scanner(System.in);
-
 
         String userInput = in.nextLine();
         String[]splitInput =  userInput.split(" ",2);

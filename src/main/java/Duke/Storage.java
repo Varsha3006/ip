@@ -25,7 +25,12 @@ public class Storage {
           }
     }
 
-    public  void createFile() throws IOException {
+    /**
+     * Loads data from the file "duke.txt".
+     * Creates a new file if the file does not exist.
+     *
+     */
+    public  void createFile()  {
           try{
               File file = new File(filePath);
               if (!file.exists()) {
@@ -55,9 +60,13 @@ public class Storage {
         }
     }
 
+    /**
+     * writes data into file "duke.txt"
+     * @param tasks ArrayList of Task objects.
+     *
+     */
 
-
-    public static void writeToFile(ArrayList<Task> tasks, int size) {
+    public static void writeToFile(ArrayList<Task> tasks)  {
         try {
             FileWriter fw = new FileWriter(filePath);
             for (int i = 0; i < tasks.size(); i++) {
@@ -69,6 +78,12 @@ public class Storage {
             printFileError();
         }
     }
+
+    /**
+     * adds new data into file "duke.txt"
+     * @param input add different tasks to file
+     *
+     */
 
     public static void appendToFile(Task input) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);

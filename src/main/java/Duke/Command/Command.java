@@ -1,8 +1,8 @@
 package Duke.Command;
 
-
-import Duke.Duke;
-
+/**
+ * Represents a command to be executed.
+ */
 public abstract class Command {
     public boolean isExit(){
         return false;
