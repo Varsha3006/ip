@@ -1,7 +1,5 @@
 package Duke;
 
-//import Duke.Command.AddTaskCommand;
-
 import Duke.Command.*;
 
 import java.io.IOException;
@@ -27,6 +25,10 @@ public class Parser {
             return new CompleteCommand(userInput, list);
         case "delete":
             return new DeleteCommand(userInput, list);
+        case "help":
+            return new HelpCommand();
+        case "find":
+            return new FindCommand(userInput);
         default:
            return new AddTaskCommand(userInput, list);
     }

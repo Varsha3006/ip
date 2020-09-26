@@ -1,7 +1,6 @@
 package Duke;
 
 public class Deadline extends Task{
-    //private static final String SYMBOL = "[D]";
     private String by;
 
     public Deadline(String description, String by) {
@@ -17,6 +16,10 @@ public class Deadline extends Task{
     @Override
     public String toString() {
         return SYMBOL + " | " + (this.isDone ? "1 | " : "0 | ") + this.description + " | " + this.by;
+    }
+    @Override
+    public String toFindString() {
+        return SYMBOL + getStatusIcon() + " " + getDescription();
     }
 
     @Override

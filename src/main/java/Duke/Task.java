@@ -14,14 +14,23 @@ public abstract class Task {
         return (isDone ? "[" + "\u2713" + "]" : "[" + "\u2718" + "]"); //return tick or X symbols
     }
 
+    public String getDescription() {
+        return description;
+    }
 
     public abstract String getSYMBOL();
 
     public abstract String toString();
 
+    public String toFindString(){
+            return getStatusIcon() + " " + getDescription();
+    }
+
     public void printTask() {
         System.out.println(this.getStatusIcon() + " " + this.description);
     }
+
+
 }
 
 

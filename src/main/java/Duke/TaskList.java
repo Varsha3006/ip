@@ -2,7 +2,8 @@ package Duke;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.stream.Collectors;
+import Duke.Task;
 
 import static Duke.Ui.*;
 
@@ -15,6 +16,26 @@ public class TaskList {
         tasks = new ArrayList<>();
         storage = inStorage;
     }
+
+    public TaskList(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public int getSize() {
+        return tasks.size();
+    }
+
+    public Task getTask(Integer index) {
+        return tasks.get(index);
+    }
+
+    public void print() {
+        for (Task task : tasks) {
+            System.out.print(tasks.indexOf(task) + 1 + ".");
+            task.printTask();
+        }
+    }
+
 
     public static void deleteTask(String line){
         int size = 0;
@@ -35,24 +56,6 @@ public class TaskList {
         task.printTask();
         System.out.println("Now you have " + tasks.size() + " tasks in the list!");
 
-    }
-
-    public static void printList() {
-
-        if (tasks.size() == 0) {
-            new Exception("empty list");
-            return;
-        }
-
-        printLine();
-
-        System.out.println("    Here are the current tasks in your list:");
-
-        for (Task task : tasks) {
-            System.out.print(tasks.indexOf(task) + 1 + ".");
-            task.printTask();
-        }
-        printLine();
     }
 
     public static void isCompleted(String command) {
@@ -102,9 +105,11 @@ public class TaskList {
         Storage.appendToFile(newEvent);
     }
 
-    public static void itemAddedMessage(){
-        System.out.println("Got it. I've added this task:");
-        tasks.get(tasks.size()-1).printTask();
-        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
+
+    public static ArrayList<Task> find(String line) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter(t -> t.description.toLowerCase().contains(line))
+                .collect(Collectors.toList());
     }
+
 }

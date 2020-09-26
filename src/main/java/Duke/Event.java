@@ -18,7 +18,10 @@ public class Event extends Task {
     public String toString() {
         return SYMBOL + " | " + (this.isDone ? "1 | " : "0 | ") + this.description + " | " + this.at;
     }
-
+    @Override
+    public String toFindString() {
+        return SYMBOL + getStatusIcon() + " " + getDescription();
+    }
     @Override
     public void printTask() {
         System.out.print("  " + SYMBOL);
