@@ -41,12 +41,12 @@ Example:  `todo homework`
 ### 3.3 Adding an 'event': `event`
 Adds an 'event' to the task list. <br/>
 Format: `event TASK /at TIME` <br/>
-Example: `event project meeting /at 6pm`
+Example: `event project meeting /at 2020-06-30`
 
 ### 3.4 Adding a 'deadline': `deadline`
 Adds a 'deadline' to the task list. <br/>
 Format: `deadline TASK /by TIME` <br/>
-Example: `deadline submit homework /by 8pm`
+Example: `deadline submit homework /by 2020-06-30`
 
 ### 3.5 List all tasks: `list`
 Shows a list of tasks in the task list. <br/>
@@ -81,10 +81,10 @@ Format: `exit`
   e.g. `todo homework`
   
 * `event TASK /at EVENT_TIME` <br/>
-  e.g. `event project meeting /at 6pm`
+  e.g. `event project meeting /at 2020-06-30`
   
 * `deadline TASK /by DUE_TIME` <br/>
-  e.g. `deadline submit homework /by 8pm`
+  e.g. `deadline submit homework /by 2020-06-30`
   
 * `list`
 

@@ -87,7 +87,7 @@ public class Ui {
     public static void printFindList(ArrayList<Task> tasks, String Key) {
 
         if (tasks.isEmpty()) {
-            new Exception("empty list");
+            System.out.println(" No matching tasks in your list (search: " + Key + ")");
             return;
         }
         System.out.println("Here are the matching tasks in your list (search: " + Key + "):");
@@ -111,6 +111,12 @@ public class Ui {
         System.out.println("Now you have " + tasks.getSize() + " tasks in the list!");
     }
 
+    /**
+     * Prints error message when there is something wrong with the format of the date entered
+     */
+    public static void printDateTimeErr() {
+        System.out.println("Oops! Please enter your date in the yyyy-mm-dd format\n");
+    }
 
     /**
      * Prints error message when there is something wrong with "duke.txt"

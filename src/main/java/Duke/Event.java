@@ -1,5 +1,8 @@
 package Duke;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
 
     private String at;
@@ -8,6 +11,7 @@ public class Event extends Task {
         super(description);
         this.at = at;
         this.SYMBOL = "[E]";
+        this.setDate(LocalDate.parse(at));
     }
 
     /**
@@ -48,6 +52,6 @@ public class Event extends Task {
     public void printTask() {
         System.out.print("  " + SYMBOL);
         System.out.print(this.getStatusIcon() + " " + this.description);
-        System.out.println(" (at: " + this.at + ")");
+        System.out.println(" (at: " + date.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")");
     }
 }
