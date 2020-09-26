@@ -3,11 +3,11 @@ package Duke.Command;
 import Duke.Command.Command;
 import Duke.Exception;
 import Duke.TaskList;
+import Duke.Ui;
 
 
 import java.io.IOException;
 
-import static Duke.TaskList.itemAddedMessage;
 import static Duke.Ui.emptyDescriptionErr;
 
 public class AddTaskCommand extends Command {
@@ -19,7 +19,7 @@ public class AddTaskCommand extends Command {
             try {
                 line = line.substring(5);
                TaskList.addTodo(line);
-               itemAddedMessage();
+              // Ui.itemAddedMessage(tasks.getTask(tasks.getSize() -1), tasks);
             } catch (StringIndexOutOfBoundsException e) {
                 emptyDescriptionErr("todo");
                 return;
@@ -29,7 +29,7 @@ public class AddTaskCommand extends Command {
             try {
                 line = line.substring(9);
                 TaskList.addDeadline(line);
-                itemAddedMessage();
+              //  Ui.itemAddedMessage(tasks.getTask(tasks.getSize() -1), tasks);
             } catch (StringIndexOutOfBoundsException e) {
                 emptyDescriptionErr("deadline");
                 return;
@@ -39,7 +39,7 @@ public class AddTaskCommand extends Command {
             try {
                 line = line.substring(6);
                 TaskList.addEvent(line);
-                itemAddedMessage();
+               // Ui.itemAddedMessage(tasks.getTask(tasks.getSize() -1), tasks);
             } catch (StringIndexOutOfBoundsException e) {
                 emptyDescriptionErr("event");
                 return;
@@ -48,6 +48,7 @@ public class AddTaskCommand extends Command {
         default:
             new Exception("not valid");
         }
+        Ui.itemAddedMessage(tasks.getTask(tasks.getSize() -1), tasks);
     }
 }
 

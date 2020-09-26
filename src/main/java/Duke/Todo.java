@@ -18,6 +18,11 @@ public class Todo extends Task {
     }
 
     @Override
+    public String toFindString() {
+        return SYMBOL + getStatusIcon() + " " + getDescription();
+    }
+
+    @Override
     public void printTask() {
         System.out.print("  " + SYMBOL);
         super.printTask();
