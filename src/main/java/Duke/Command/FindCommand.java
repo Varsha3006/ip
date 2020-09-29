@@ -18,11 +18,9 @@ public class FindCommand extends Command  {
      * @param command input by user to find the keyword
      *
      */
-    public FindCommand(String command)  {
+    public FindCommand(String command) {
         this.key = command.substring(5);
-
         ArrayList<Task> tasks = TaskList.find(key);
-
         Ui.printFindList(tasks,key);
     }
 

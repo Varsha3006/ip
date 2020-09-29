@@ -1,7 +1,7 @@
 package Duke.Command;
 
-import Duke.Command.Command;
 import Duke.Exception;
+
 import Duke.TaskList;
 import Duke.Ui;
 
@@ -62,6 +62,7 @@ public class AddTaskCommand extends Command {
             break;
         default:
             new Exception("not valid");
+            return;
         }
         Ui.itemAddedMessage(tasks.getTask(tasks.getSize() -1), tasks);
     }

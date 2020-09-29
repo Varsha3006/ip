@@ -21,7 +21,7 @@ public class Parser {
         case"bye":
             return new ExitCommand();
         case "list":
-           return new ListCommand(list);
+           return new ListCommand(userInput,list);
         case"done":
             return new CompleteCommand(userInput, list);
         case "delete":

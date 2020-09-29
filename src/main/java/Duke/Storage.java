@@ -7,9 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static Duke.TaskList.addEvent;
-import static Duke.TaskList.addDeadline;
+
 import static Duke.TaskList.addTodo;
+import static Duke.TaskList.addDeadline;
+import static Duke.TaskList.addEvent;
 import static Duke.Ui.printFileError;
 
 public class Storage {

@@ -26,7 +26,6 @@ Duke is a desktop application for task management, optimized for use via a Comma
 ## 3. Features
 #### Command Format
 * Command word is case-sensitive e.g. `todo` must be entered as `todo`.
-Description of feature.
 * Words in UPPER_CASE are the parameters to be supplied by the user.
 
 ### 3.1 Help `help`
@@ -40,17 +39,22 @@ Example:  `todo homework`
 
 ### 3.3 Adding an 'event': `event`
 Adds an 'event' to the task list. <br/>
-Format: `event TASK /at TIME` <br/>
+Format: `event TASK /at DATE` <br/>
 Example: `event project meeting /at 2020-06-30`
 
 ### 3.4 Adding a 'deadline': `deadline`
 Adds a 'deadline' to the task list. <br/>
-Format: `deadline TASK /by TIME` <br/>
+Format: `deadline TASK /by DATE` <br/>
 Example: `deadline submit homework /by 2020-06-30`
 
-### 3.5 List all tasks: `list`
+### 3.5a List all tasks: `list`
 Shows a list of tasks in the task list. <br/>
 Format: `list`
+
+### 3.5b List all tasks filtered by date: `list DATE`
+Shows a list of tasks filtered by date entered. <br/>
+Format: `list DATE`
+Example: `list 2000-06-30`
 
 ### 3.6 Finding tasks by keywords: `find`
 To find tasks using keywords.<br/>
@@ -86,7 +90,8 @@ Format: `exit`
 * `deadline TASK /by DUE_TIME` <br/>
   e.g. `deadline submit homework /by 2020-06-30`
   
-* `list`
+* `list` or `list DATE`<br/>
+e.g `list 2000-06-30`
 
 * `find KEYWORD` <br/>
   e.g. `find book`

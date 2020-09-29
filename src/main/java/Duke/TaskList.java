@@ -58,20 +58,17 @@ public class TaskList {
         Ui.printLine();
         try {
             size = Integer.parseInt(line.substring(7));
+            Task task = tasks.get(size - 1);
+            tasks.remove(task);
+            Storage.writeToFile(tasks);
+            System.out.println("I'll delete this:");
+            task.printTask();
+            System.out.println("Now you have " + tasks.size() + " tasks in the list!");
         } catch (StringIndexOutOfBoundsException e){
             Ui.emptyDescriptionErr("delete command");
-            return;
         } catch (IndexOutOfBoundsException e){
             Ui.notValidNumberErr();
         }
-
-        Task task = tasks.get(size - 1);
-        tasks.remove(task);
-        Storage.writeToFile(tasks);
-        System.out.println("I'll delete this:");
-        task.printTask();
-        System.out.println("Now you have " + tasks.size() + " tasks in the list!");
-
     }
 
     /**
