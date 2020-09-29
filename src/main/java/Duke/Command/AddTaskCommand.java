@@ -1,17 +1,17 @@
 package Duke.Command;
 
 import Duke.Exception;
-
 import Duke.TaskList;
 import Duke.Ui;
-
-
 import java.io.IOException;
-
 import static Duke.Ui.emptyDescriptionErr;
 import static Duke.Ui.notValidNumberErr;
 
 public class AddTaskCommand extends Command {
+    private static final int TODO_INDEX = 5;
+    private static final int DEADLINE_INDEX = 9;
+    private static final int EVENT_INDEX = 6;
+
 
     /**
      * Adds a task to the TaskList.
@@ -26,7 +26,7 @@ public class AddTaskCommand extends Command {
         switch (input[0]) {
         case "todo":
             try {
-                line = line.substring(5);
+                line = line.substring(TODO_INDEX);
                TaskList.addTodo(line);
             } catch (StringIndexOutOfBoundsException e) {
                 emptyDescriptionErr("todo");
@@ -38,7 +38,7 @@ public class AddTaskCommand extends Command {
             break;
         case "deadline":
             try {
-                line = line.substring(9);
+                line = line.substring(DEADLINE_INDEX);
                 TaskList.addDeadline(line);
             } catch (StringIndexOutOfBoundsException e) {
                 emptyDescriptionErr("deadline");
@@ -50,7 +50,7 @@ public class AddTaskCommand extends Command {
             break;
         case "event":
             try {
-                line = line.substring(6);
+                line = line.substring(EVENT_INDEX);
                 TaskList.addEvent(line);
             } catch (StringIndexOutOfBoundsException e) {
                 emptyDescriptionErr("event");

@@ -1,9 +1,7 @@
 package Duke;
 
-
 import java.io.IOException;
 import java.time.DateTimeException;
-
 import Duke.Command.Command;
 
 public class Duke {
@@ -16,7 +14,7 @@ public class Duke {
      * @param args
      */
     public static void main(String[] args) throws IOException {
-        new Duke("duke.txt").run("duke.txt");
+        new Duke("duke.txt").run();
     }
 
     /**
@@ -32,7 +30,7 @@ public class Duke {
     /**
      * Runs the program.
      */
-    public void run(String filePath) throws IOException {
+    public void run() throws IOException {
         Ui.printWelcomeMessage();
         boolean isExit = false;
 

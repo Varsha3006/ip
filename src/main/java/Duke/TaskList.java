@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class TaskList {
     private Storage storage;
     public static ArrayList<Task> tasks = new ArrayList<>();
+    private static final int DELETE_INDEX = 7;
 
 
     public TaskList(Storage inStorage) {
@@ -57,7 +58,7 @@ public class TaskList {
         int size = 0;
         Ui.printLine();
         try {
-            size = Integer.parseInt(line.substring(7));
+            size = Integer.parseInt(line.substring(DELETE_INDEX));
             Task task = tasks.get(size - 1);
             tasks.remove(task);
             Storage.writeToFile(tasks);
@@ -78,7 +79,7 @@ public class TaskList {
     public static void isCompleted(String command) {
         int index = 0;
         command = command.replace("done", " ");
-        command = command.strip(); //removes white space
+        command = command.strip();
         try {
             index = Integer.parseInt(command);
         } catch (NumberFormatException e) {
@@ -107,7 +108,6 @@ public class TaskList {
      *
      */
     public static void addTodo(String line) throws IOException{
-
         Todo newTodo = new Todo(line);
         tasks.add(newTodo);
         Storage.appendToFile(newTodo);
@@ -119,13 +119,13 @@ public class TaskList {
      * @param line User command input.
      *
      */
-    public static void addDeadline(String line) throws IOException{
+    public static void addDeadline(String line) throws IOException {
         String[] description = line.split(" /by ");
         Deadline newDeadline = new Deadline(description[0], description[1]);
         tasks.add(newDeadline);
-
         Storage.appendToFile(newDeadline);
     }
+
     /**
      * Adds an event task to the TaskList.
      *
@@ -137,7 +137,6 @@ public class TaskList {
         tasks.add(newEvent);
         Storage.appendToFile(newEvent);
     }
-
 
     public static ArrayList<Task> find(String line) {
         return (ArrayList<Task>) tasks.stream()
