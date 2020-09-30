@@ -37,7 +37,7 @@ public class Ui {
      */
     public static void printExitMessage() {
         printLine();
-        System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    Bye Bye for now! See you soon!");
         printLine();
     }
 
@@ -51,7 +51,7 @@ public class Ui {
      */
     public static void listAllCommands(){
         printLine();
-        System.out.println("    Hi there! Here are all the available commands and their respective formats:");
+        System.out.println("    Hello there! Here are all the available commands and their respective formats:");
         System.out.println("    To add a deadline: \"deadline {Name of task} /by {date} \"");
         System.out.println("    To add an event: \"event {Name of task} /at {date} \" \");");
         System.out.println("    To add an item in todo: \"todo {Name of task}\" ");
@@ -128,10 +128,9 @@ public class Ui {
     /**
      * Prints success message when the task is added successfully.
      *
-     * @param task Task to be added.
      * @param tasks Current TaskList.
      */
-    public static void itemAddedMessage(Task task, TaskList tasks){
+    public static void itemAddedMessage(TaskList tasks){
         printLine();
         System.out.println("    Got it. I've added this task:");
         tasks.getTask(tasks.getSize()-1).printTask();

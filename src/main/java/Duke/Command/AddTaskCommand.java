@@ -64,7 +64,7 @@ public class AddTaskCommand extends Command {
             new Exception("not valid");
             return;
         }
-        Ui.itemAddedMessage(tasks.getTask(tasks.getSize() -1), tasks);
+        Ui.itemAddedMessage(tasks);
     }
 }
 
