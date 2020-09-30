@@ -25,7 +25,7 @@ public class Ui {
      */
     public static void printWelcomeMessage() {
 
-        System.out.println("    Hi! I am easy\n");
+        System.out.println("    Hi! I am easy");
         printLogo();
         printLine();
         System.out.println("    What can I do for you?");
@@ -42,7 +42,7 @@ public class Ui {
     }
 
     public static void printLine(){
-        System.out.println( "   " + "_".repeat(NUMBER_DASHES));
+        System.out.println( "-".repeat(NUMBER_DASHES));
     }
 
     /**

@@ -19,9 +19,13 @@ public class FindCommand extends Command  {
      *
      */
     public FindCommand(String command) {
-        this.key = command.substring(5);
-        ArrayList<Task> tasks = TaskList.find(key);
-        Ui.printFindList(tasks,key);
+        try {
+            this.key = command.substring(5);
+            ArrayList<Task> tasks = TaskList.find(key);
+            Ui.printFindList(tasks, key);
+        } catch (StringIndexOutOfBoundsException e) {
+            Ui.emptyDescriptionErr("find command");
+        }
     }
 
 }
