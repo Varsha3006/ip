@@ -23,8 +23,9 @@ public abstract class Task {
      * @return Tick or Cross
      */
     public String getStatusIcon() {
-        return (isDone ? "[" + "\u2713" + "]" : "[" + "\u2718" + "]"); //return tick or X symbols
+        return isDone ? "[/]" : "[X]";
     }
+
 
     /**
      * Returns the description of the task.
