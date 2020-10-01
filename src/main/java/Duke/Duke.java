@@ -4,6 +4,15 @@ import java.io.IOException;
 import java.time.DateTimeException;
 import Duke.Command.Command;
 
+/**
+ * The Duke programme allows users to store their tasks as either an
+ * Event, To Do or Deadline
+ *
+ * @author Varsha MS
+ * @since 1/10/2020
+ * 
+ */
+
 public class Duke {
     private TaskList list;
     private Storage storage;
@@ -11,7 +20,6 @@ public class Duke {
     /**
      * Runs Duke instance.
      *
-     * @param args
      */
     public static void main(String[] args) throws IOException {
         new Duke("duke.txt").run();
